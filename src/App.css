@@ -3,13 +3,16 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: #333;
+    background-color: #eceff2;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 a {
     color: #111;
     text-decoration: none;
 }
+
 /*采取flex布局*/
 #root {
     display: flex;
@@ -21,5 +24,6 @@ a {
 
 main {
     /*让main撑满页面*/
-    flex:1;
+    flex: 1;
+    padding: 30px 100px;
 }

@@ -1,19 +1,38 @@
 import React from "react";
 import logo from './logo.svg'
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import styled from 'styled-components'
 
-function Header() {
+const Header = styled.header` //返回一个新的标签
+  background-color: #02101f;
+  padding: 10px 100px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+`
+const Logo = styled.img`
+  height: 30px;
+`
+
+const StyledLink = styled(NavLink)`
+  color: #fff;
+  margin-left: 30px;
+  &.active {
+    border-bottom: 1px solid #ccc;
+  }
+`
+
+function Component() {
     return (
-        <header>
-            <img src={logo} alt=''/>
+        <Header>
+            <Logo src={logo} alt=''/>
             <nav>
-                <Link to='/'>首页</Link>
-                <Link to='/history'>上传历史</Link>
-                <Link to='/about'>关于我</Link>
+                <StyledLink to='/' activeClassName='active'>首页</StyledLink>
+                <StyledLink to='/history' activeClassName='active'>上传历史</StyledLink>
+                <StyledLink to='/about' activeClassName='active'>关于我</StyledLink>
             </nav>
-        </header>
+        </Header>
     )
 }
 
-export default Header
+export default Component
