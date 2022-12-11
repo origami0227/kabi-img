@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+a {
+    color: #111;
+    text-decoration: none;
+}
+/*采取flex布局*/
+#root {
+    display: flex;
+    /*纵向排列*/
+    flex-direction: column;
+    /*确保footer在页面最底端*/
+    min-height: 100vh;
+}
+
+main {
+    /*让main撑满页面*/
+    flex:1;
+}
