@@ -27,9 +27,9 @@ function Component() {
         <Header>
             <Logo src={logo} alt=''/>
             <nav>
-                <StyledLink to='/' activeClassName='active'>首页</StyledLink>
-                <StyledLink to='/history' activeClassName='active'>上传历史</StyledLink>
-                <StyledLink to='/about' activeClassName='active'>关于我</StyledLink>
+                <StyledLink to='/' activeclassname='active'>首页</StyledLink>
+                <StyledLink to='/history' activeclassname='active'>上传历史</StyledLink>
+                <StyledLink to='/about' activeclassname='active'>关于我</StyledLink>
             </nav>
         </Header>
     )

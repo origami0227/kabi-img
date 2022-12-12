@@ -1,11 +1,15 @@
 import React from "react";
+import {observer} from "mobx-react";
+import {useStores} from "../stores";
 
-function Register() {
+const Register = observer(() => {
+    const {AuthStore} = useStores() //获取AuthStore
+
     return (
         <>
-            <h1>Register</h1>
+            <h1>Register:{AuthStore.values.username}</h1>
         </>
     )
-}
+})
 
 export default Register

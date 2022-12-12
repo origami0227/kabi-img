@@ -1,12 +1,15 @@
-import {observable, action} from "mobx";
+import {observable, action, makeObservable} from "mobx";
 
 
 class AuthStore {
+    constructor() {
+        makeObservable(this)//mobx 6版本要求
+    }
     //观测是否登录，加载，以及用户的信息
     @observable isLogin = false;
     @observable isLoading = false
     @observable values = {
-        username: '',
+        username: '卡比兽',
         password: ''
     };
     //动作
