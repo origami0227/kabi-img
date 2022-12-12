@@ -1,5 +1,5 @@
 import React, {useContext, createContext} from "react";
-import AuthStore from "./auth";
+import {AuthStore} from "./auth";
 
 
 //创建context对象
