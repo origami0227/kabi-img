@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   max-width: 600px;
   margin: 30px auto;
-  box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
 `
 const Title = styled.h1`
@@ -20,6 +20,23 @@ const Register = () => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    //用户名校验
+    const validateUsername = {
+        username(rule, value,) {
+            if (/\W/.test(value)) return Promise.reject('不能出现下划线字母数字以外的字符')
+            if (value.length < 4 || value.length>10) return Promise.reject('用户名长度为4-10个字符')
+            Promise.resolve()
+        }
+    }
+    //确认密码校验
+    const confirmPassword = ({getFieldValue}) => ({
+        validator(rule, value) {
+            if (!value || getFieldValue('password') === value) {
+                return Promise.resolve() //未输入或者两次密码匹配的情况
+            }
+            return Promise.reject('两次密码不匹配')
+        }
+    })
     return (
         <Wrapper>
             <Title>注册</Title>
@@ -46,6 +63,9 @@ const Register = () => {
                             required: true,
                             message: '请输入用户名',
                         },
+                        {
+                            validator: validateUsername.username
+                        }
                     ]}
                 >
                     <Input/>
@@ -57,8 +77,16 @@ const Register = () => {
                     rules={[
                         {
                             required: true,
-                            message: '请输入密码',
+                            message: '请输入密码', //不填会提示
                         },
+                        {
+                            min: 6,
+                            message: '最少输入6个字符',//如果比六个字符小则会提示
+                        },
+                        {
+                            max: 16,
+                            message: '不能超过16个字符',//超过16个字符也会提示
+                        }
                     ]}
                 >
                     <Input.Password/>
@@ -72,6 +100,7 @@ const Register = () => {
                             required: true,
                             message: '请再次确认密码',
                         },
+                        confirmPassword
                     ]}
                 >
                     <Input.Password/>
