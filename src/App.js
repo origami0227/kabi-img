@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import React, {Suspense, lazy} from 'react';
 import Loading from "./components/Loading";
 import './App.css'
+// import Model from './models'
 // import Home from "./pages/Home";
 // import History from "./pages/History";
 // import About from "./pages/About";
