@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Checkbox, Form, Input} from 'antd';
+import {Button, Form, Input} from 'antd';
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ const Register = () => {
     const validateUsername = {
         username(rule, value,) {
             if (/\W/.test(value)) return Promise.reject('不能出现下划线字母数字以外的字符')
-            if (value.length < 4 || value.length>10) return Promise.reject('用户名长度为4-10个字符')
+            if (value.length < 4 || value.length > 10) return Promise.reject('用户名长度为4-10个字符')
             Promise.resolve()
         }
     }
