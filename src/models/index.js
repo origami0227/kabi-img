@@ -25,7 +25,7 @@ const Auth = {
     //登录逻辑
     login(username, password) {
         return new Promise((resolve, reject) => {
-            AV.User.logIn(username, password).then(loginedUser => {
+            User.logIn(username, password).then(loginedUser => {
                 console.log('登录成功')
                 resolve(loginedUser)
             }, error => {

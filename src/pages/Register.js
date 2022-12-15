@@ -22,10 +22,10 @@ const Register = () => {
         AuthStore.setUsername(values.username)
         AuthStore.setPassword(values.password)//先设置好用户名和密码调用login的时候才能找到相应的属性
         AuthStore.register()
-            .then(()=>{
+            .then(() => {
                 console.log('注册成功，跳转到首页')
             })
-            .catch(()=>{
+            .catch(() => {
                 console.log('注册失败，什么都不做')
             })
     };
