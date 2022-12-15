@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Form, Input} from 'antd';
 import styled from 'styled-components'
+import {useStores} from "../stores";
+
 
 const Wrapper = styled.div`
   max-width: 600px;
@@ -14,8 +16,18 @@ const Title = styled.h1`
 `
 
 const Register = () => {
+    const {AuthStore} = useStores()
     const onFinish = (values) => {
         console.log('Success:', values);
+        AuthStore.setUsername(values.username)
+        AuthStore.setPassword(values.password)//先设置好用户名和密码调用login的时候才能找到相应的属性
+        AuthStore.register()
+            .then(()=>{
+                console.log('注册成功，跳转到首页')
+            })
+            .catch(()=>{
+                console.log('注册失败，什么都不做')
+            })
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
