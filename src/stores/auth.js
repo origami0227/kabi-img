@@ -1,22 +1,24 @@
 import {observable, action, makeObservable} from "mobx";
+import {Auth} from './index'
 
 
 class AuthStore {
     constructor() {
         makeObservable(this)//mobx 6版本要求
     }
+
     //观测是否登录，加载，以及用户的信息
-    @observable isLogin = false;
-    @observable isLoading = false
+    // @observable isLogin = false;
+    // @observable isLoading = false
     @observable values = {
-        username: '卡比兽',
+        username: '',
         password: ''
     };
     //动作
     //登录操作
-    @action setIsLogin(isLogin) {
-        this.isLogin = isLogin
-    }
+    // @action setIsLogin(isLogin) {
+    //     this.isLogin = isLogin
+    // }
 
     //设置用户名
     @action setUsername(username) {
@@ -30,34 +32,39 @@ class AuthStore {
 
     //登录
     @action login() {
-        //发请求
-
-        //模拟
-        console.log('logging...')
-        this.isLoading = true
-        setTimeout(() => {
-            console.log('login successfully')
-            this.isLogin = true //登录状态
-            this.isLoading = false //成功后还原
-        }, 1000)
+        return new Promise((resolve, reject) => {
+            //调用登录接口Auth.login,用户名就是values里面的username
+            Auth.login(this.values.username, this.values.password)
+                .then(user => {
+                    console.log('登录成功')
+                    resolve(user)
+                })
+                .catch(err => {
+                    console.log('登录失败')
+                    reject(err)
+                })
+        })
     }
 
     //注册
     @action register() {
-        //模拟
-        console.log('registering...')
-        this.isLoading = true
-        setTimeout(() => {
-            console.log('registered successfully')
-            this.isLogin = true //登录状态
-            this.isLoading = false //成功后还原
-        }, 1000)
+        return new Promise((resolve, reject) => {
+            //调用登录接口Auth.register
+            Auth.register(this.values.username, this.values.password)
+                .then(user => {
+                    console.log('注册成功')
+                    resolve(user)
+                })
+                .catch(err => {
+                    console.log('注册失败')
+                    reject(err)
+                })
+        })
     }
 
     //注销
     @action logout() {
-        //模拟
-        console.log('Has been cancelled')
+        Auth.logout()
     }
 }
 
