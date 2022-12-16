@@ -68,4 +68,4 @@ class AuthStore {
     }
 }
 
-export {AuthStore}
+export default new AuthStore()
