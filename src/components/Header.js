@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import logo from './logo.svg'
-import {NavLink} from "react-router-dom";
+import {NavLink,useNavigate} from "react-router-dom";
 import styled from 'styled-components'
 import {Button} from "antd";
+import {useStores} from "../stores";
+import {observer} from "mobx-react";
+
 
 const Header = styled.header` //返回一个新的标签
   background-color: #02101f;
@@ -31,9 +34,21 @@ const StyledButton = styled(Button)`
 `
 
 
-function Component() {
+const Component = observer(() => {
     //状态判断
-    const [isLogin, setIsLogin] = useState(false) //默认是false
+    const {UserStore, AuthStore} = useStores() //使用UserStore
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        AuthStore.logout()
+    }
+    const handleLogin = () => {
+        console.log('跳转到登录界面')
+        navigate("/login")
+    }
+    const handleRegister = () => {
+        console.log('跳转到注册界面')
+        navigate("/register")
+    }
     return (
         <Header>
             <Logo src={logo} alt=''/>
@@ -45,22 +60,23 @@ function Component() {
             <Login>
                 {/*判断登录状态*/}
                 {/*如果登录了就展示用户名否则展示登录/注册按钮*/}
-                {isLogin ? <>
-                        卡比兽 <StyledButton type="primary" onClick={()=>setIsLogin(false)}>注销</StyledButton>
+                {UserStore.currentUser ? <>
+                        {UserStore.currentUser.attributes.username} <StyledButton type="primary"
+                                                                                  onClick={handleLogout}>注销</StyledButton>
                     </> :
                     <>
-                        <StyledButton type="primary" onClick={()=>setIsLogin(true)}>
-                            <NavLink to="/login">登录</NavLink>
+                        <StyledButton type="primary" onClick={handleLogin}>
+                            登录
                         </StyledButton>
-                        <StyledButton type="primary">
-                            <NavLink to='/register'>注册</NavLink>
+                        <StyledButton type="primary" onClick={handleRegister}>
+                            注册
                         </StyledButton>
                     </>
                 }
             </Login>
         </Header>
     )
-}
+})
 
 export default Component
 

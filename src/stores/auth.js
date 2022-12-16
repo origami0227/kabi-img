@@ -1,5 +1,6 @@
 import {observable, action, makeObservable} from "mobx";
 import {Auth} from '../models'
+import UserStore from './user'
 
 
 class AuthStore {
@@ -36,11 +37,11 @@ class AuthStore {
             //调用登录接口Auth.login,用户名就是values里面的username
             Auth.login(this.values.username, this.values.password)
                 .then(user => {
-                    console.log('登录成功')
+                    UserStore.pullUser() //登录成功后在UserStore中也进行同步
                     resolve(user)
                 })
                 .catch(err => {
-                    console.log('登录失败')
+                    UserStore.resetUser()//失败就重置
                     reject(err)
                 })
         })
@@ -52,11 +53,11 @@ class AuthStore {
             //调用登录接口Auth.register
             Auth.register(this.values.username, this.values.password)
                 .then(user => {
-                    console.log('注册成功')
+                    UserStore.pullUser()
                     resolve(user)
                 })
                 .catch(err => {
-                    console.log('注册失败')
+                    UserStore.resetUser()//失败就重置
                     reject(err)
                 })
         })
@@ -65,6 +66,7 @@ class AuthStore {
     //注销
     @action logout() {
         Auth.logout()
+        UserStore.resetUser()//重置
     }
 }
 

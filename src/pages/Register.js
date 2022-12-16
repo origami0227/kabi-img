@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Form, Input} from 'antd';
 import styled from 'styled-components'
 import {useStores} from "../stores";
+import {useNavigate} from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -17,6 +18,7 @@ const Title = styled.h1`
 
 const Register = () => {
     const {AuthStore} = useStores()
+    const navigate = useNavigate()
     const onFinish = (values) => {
         console.log('Success:', values);
         AuthStore.setUsername(values.username)
@@ -24,6 +26,7 @@ const Register = () => {
         AuthStore.register()
             .then(() => {
                 console.log('注册成功，跳转到首页')
+                navigate('/')
             })
             .catch(() => {
                 console.log('注册失败，什么都不做')

@@ -9,5 +9,9 @@ const context = createContext({
     AuthStore,
     UserStore,
 })
+window.stores = {
+    AuthStore,
+    UserStore,
+}
 
 export const useStores = () => useContext(context) //导出
