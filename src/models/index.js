@@ -69,4 +69,4 @@ const UpLoader = {
 }
 
 
-export {Auth,UpLoader};
+export {Auth, UpLoader};
