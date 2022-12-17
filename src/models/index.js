@@ -43,8 +43,30 @@ const Auth = {
     }
 }
 
-console.log('start...')
-//测试代码
+//上传文件
+const UpLoader = {
+    //上传图片 调用add方法
+    add(file, filename) {
+        //当用户调用UpLoader的add的时候需要向服务器创建一个图片信息,要传输file，filename两个参数
+        //首先需要构造对象
+        const item = new AV.Object("image") //item代表上传的文件
+        const avFile = new AV.File(filename, file) //文件路径
+        item.set('filename', filename) //设置文件名
+        item.set("owner", AV.User) //设置文件所有者
+        item.set('url', avFile) //设置文件的路径
+        //保存
+        return new Promise((resolve, reject) => {
+            item.save().then((serverFile) => {
+                console.log('保存成功')
+                resolve(serverFile)
+            }, (error) => {
+                console.log('保存失败')
+                alert(JSON.stringify(error))
+                reject(error)
+            })
+        })
+    }
+}
 
 
-export {Auth};
+export {Auth,UpLoader};
