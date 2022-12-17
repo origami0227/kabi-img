@@ -52,7 +52,7 @@ const UpLoader = {
         const item = new AV.Object("image") //item代表上传的文件
         const avFile = new AV.File(filename, file) //文件路径
         item.set('filename', filename) //设置文件名
-        item.set("owner", AV.User) //设置文件所有者
+        item.set("owner", AV.User.current()) //设置文件所有者
         item.set('url', avFile) //设置文件的路径
         //保存
         return new Promise((resolve, reject) => {
