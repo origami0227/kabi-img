@@ -1,18 +1,23 @@
 import React from 'react'
 import {useStores} from "../stores";
 import {observer} from 'mobx-react'
-import {Upload} from 'antd';
+import {message, Upload} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 
 const {Dragger} = Upload;
 const Uploader = observer(() => {
-    const {ImageStore} = useStores() //使用ImageStore
+    const {ImageStore,UserStore} = useStores() //使用ImageStore
     const props = {
         showUploadList:false, //隐藏文件展示列表
         beforeUpload: file => {
             //里面有文件的情况（即已经上传）即可调用上传逻辑
             ImageStore.setFile(file) //把上传的文件设置进去
             ImageStore.setFilename(file.name)//设置文件名
+            //条件判断
+            if(UserStore.currentUser === null){
+                message.warning('请先登录再上传')
+                return false //不执行后续的手动上传逻辑
+            }
             //上传
             ImageStore.upload()
                 .then((serverFile) => {
