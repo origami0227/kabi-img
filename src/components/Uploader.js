@@ -3,18 +3,32 @@ import {useStores} from "../stores";
 import {observer} from 'mobx-react'
 import {message, Upload} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
+import styled from 'styled-components'
 
 const {Dragger} = Upload;
+
+const Result = styled.div`
+  margin-top: 30px;
+  border: 1px dashed #ccc;
+  padding: 20px;
+`
+const H1 = styled.h1`
+  margin: 20px 0;
+  text-align: center;
+`
+const Image = styled.img`
+  max-width: 300px;
+`
 const Uploader = observer(() => {
-    const {ImageStore,UserStore} = useStores() //使用ImageStore
+    const {ImageStore, UserStore} = useStores() //使用ImageStore
     const props = {
-        showUploadList:false, //隐藏文件展示列表
+        showUploadList: false, //隐藏文件展示列表
         beforeUpload: file => {
             //里面有文件的情况（即已经上传）即可调用上传逻辑
             ImageStore.setFile(file) //把上传的文件设置进去
             ImageStore.setFilename(file.name)//设置文件名
             //条件判断
-            if(UserStore.currentUser === null){
+            if (UserStore.currentUser === null) {
                 message.warning('请先登录再上传')
                 return false //不执行后续的手动上传逻辑
             }
@@ -33,7 +47,7 @@ const Uploader = observer(() => {
     }
 
     return (
-        <div>
+        <Result>
             <h1>文件上传</h1>
             <Dragger {...props}>
                 <p className="ant-upload-drag-icon">
@@ -45,14 +59,26 @@ const Uploader = observer(() => {
                     band files
                 </p>
             </Dragger>
-            <h1>上传结果:</h1>
-            {ImageStore.serverFile
-                ?
-                <div>{ImageStore.serverFile.attributes.url.attributes.url}</div>
-                :
-                null
-            }
-        </div>
+            {ImageStore.serverFile ? <div>
+                <H1>上传结果:</H1>
+                <dl>
+                    <dt>线上地址</dt>
+                    <dd><a target="_blank"
+                           rel="noreferrer"
+                           href={ImageStore.serverFile.attributes.url.attributes.url}>{ImageStore.serverFile.attributes.url.attributes.url}</a>
+                    </dd>
+                    <dt>文件名</dt>
+                    <dd>{ImageStore.filename}</dd>
+                    <dt>图片预览</dt>
+                    <dd><Image src={ImageStore.serverFile.attributes.url.attributes.url} alt=""/></dd>
+                    <dt>更多尺寸</dt>
+                    <dd>
+                        <input placeholder="最大宽度（可选）"/>
+                        <input placeholder="最大高度（可选）"/>
+                    </dd>
+                </dl>
+            </div> : null}
+        </Result>
     )
 })
 
