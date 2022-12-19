@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {useStores} from "../stores";
-import {observer} from 'mobx-react'
+import {observer, useLocalStore} from 'mobx-react'
 import {message, Upload} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import styled from 'styled-components'
@@ -21,6 +21,37 @@ const Image = styled.img`
 `
 const Uploader = observer(() => {
     const {ImageStore, UserStore} = useStores() //使用ImageStore
+    const ref1 = useRef() //标记设置宽度的input
+    const ref2 = useRef() //标记设置高度的input
+    const bindWidthChange = () => {
+        store.setWidth(ref1.current.value)
+    }
+    const bindHeightChange = () => {
+        store.setHeight(ref2.current.value)
+    }
+    //使用useLocalStore
+    const store = useLocalStore(() => ({
+        width: null, //用户输入的宽度
+        //设置宽度
+        setWidth() {
+            store.width = ref1.current.value
+        },
+        get widthStr() {
+            return store.width ? `/w/${store.width}` : '' //返回控制宽度字符串
+        },
+        height: null, // 用户输入的高度
+        //设置高度
+        setHeight() {
+            store.height = ref2.current.value
+        },
+        get heightSre() {
+            return store.height ? `/h/${store.height}` : '' //返回控制高度的字符串
+        },
+        get fullStr() {
+            //定制尺寸后的后的完整路径
+            return ImageStore.serverFile.attributes.url.attributes.url + '?imageView2/0' + store.widthStr + store.heightSre
+        }
+    }))
     const props = {
         showUploadList: false, //隐藏文件展示列表
         beforeUpload: file => {
@@ -73,8 +104,12 @@ const Uploader = observer(() => {
                     <dd><Image src={ImageStore.serverFile.attributes.url.attributes.url} alt=""/></dd>
                     <dt>更多尺寸</dt>
                     <dd>
-                        <input placeholder="最大宽度（可选）"/>
-                        <input placeholder="最大高度（可选）"/>
+                        <input ref={ref1} onChange={bindWidthChange} placeholder="最大宽度（可选）"/>
+                        <input ref={ref2} onChange={bindHeightChange} placeholder="最大高度（可选）"/>
+                    </dd>
+                    <dd>
+                        <a rel="noreferrer"
+                           target="_blank" href={store.fullStr}>{store.fullStr}</a>
                     </dd>
                 </dl>
             </div> : null}
