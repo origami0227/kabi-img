@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import {useStores} from "../stores";
 import {observer, useLocalStore} from 'mobx-react'
-import {message, Upload} from 'antd';
+import {message, Upload, Spin} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import styled from 'styled-components'
 
@@ -93,6 +93,7 @@ const Uploader = observer(() => {
 
     return (
         <Result>
+            <Spin tip="上传中" spinning={ImageStore.isUpLoading}>
             <h1>文件上传</h1>
             <Dragger {...props}>
                 <p className="ant-upload-drag-icon">
@@ -103,6 +104,7 @@ const Uploader = observer(() => {
                     仅支持.png/.gif/.jpg/.jpeg/.svg类型的图片，图片最大不超过1mb
                 </p>
             </Dragger>
+            </Spin>
             {ImageStore.serverFile ? <div>
                 <H1>上传结果:</H1>
                 <dl>

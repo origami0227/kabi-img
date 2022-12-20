@@ -1,6 +1,6 @@
 import {observable, action, makeObservable} from "mobx";
 import {UpLoader} from '../models'
-
+import {message} from 'antd';
 
 class ImageStore {
 
@@ -31,13 +31,15 @@ class ImageStore {
     //上传
     @action upload() {
         this.isUpLoading = true
+        this.serverFile = null //多次上传会覆盖之前的结果
         return new Promise((resolve, reject) => {
             UpLoader.add(this.file, this.filename)
                 .then(serverFile => {
-                    this.serverFile = serverFile
+                    this.serverFile = serverFile //自动覆盖
                     resolve(serverFile)
                 }).catch(err => {
                 console.error('上传失败')
+                message.error('上传失败')
                 reject(err)
             }).finally(() => {
                 this.isUpLoading = false

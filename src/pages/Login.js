@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Input} from 'antd';
+import {Button, Form, Input, Spin} from 'antd';
 import styled from 'styled-components'
 import {useStores} from "../stores";
 import {useNavigate} from "react-router-dom";
@@ -104,9 +104,11 @@ const Login = () => {
                         span: 16,
                     }}
                 >
+                    <Spin tip="登录中" spinning={AuthStore.isLoading}>
                     <Button type="primary" htmlType="submit">
                         提交
                     </Button>
+                    </Spin>
                 </Form.Item>
             </Form>
         </Wrapper>

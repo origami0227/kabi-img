@@ -1,6 +1,7 @@
 import {observable, action, makeObservable} from "mobx";
 import {Auth} from '../models'
 import UserStore from './user'
+import {message} from 'antd';
 
 
 class AuthStore {
@@ -10,7 +11,7 @@ class AuthStore {
 
     //观测是否登录，加载，以及用户的信息
     // @observable isLogin = false;
-    // @observable isLoading = false
+    @observable isLoading = false
     @observable values = {
         username: '',
         password: ''
@@ -33,6 +34,7 @@ class AuthStore {
 
     //登录
     @action login() {
+        this.isLoading = true
         return new Promise((resolve, reject) => {
             //调用登录接口Auth.login,用户名就是values里面的username
             Auth.login(this.values.username, this.values.password)
@@ -42,8 +44,11 @@ class AuthStore {
                 })
                 .catch(err => {
                     UserStore.resetUser()//失败就重置
+                    message.error("登录失败")
                     reject(err)
-                })
+                }).finally(()=>{
+                this.isLoading = false
+            })
         })
     }
 
@@ -58,6 +63,7 @@ class AuthStore {
                 })
                 .catch(err => {
                     UserStore.resetUser()//失败就重置
+                    message.error("注册失败")
                     reject(err)
                 })
         })
