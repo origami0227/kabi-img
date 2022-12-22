@@ -49,7 +49,7 @@ const UpLoader = {
     add(file, filename) {
         //当用户调用UpLoader的add的时候需要向服务器创建一个图片信息,要传输file，filename两个参数
         //首先需要构造对象
-        const item = new AV.Object("image") //item代表上传的文件
+        const item = new AV.Object("Image") //item代表上传的文件
         const avFile = new AV.File(filename, file) //文件路径
         item.set('filename', filename) //设置文件名
         item.set("owner", AV.User.current()) //设置文件所有者
@@ -65,8 +65,24 @@ const UpLoader = {
                 reject(error)
             })
         })
+    },
+    //查询数据
+    //默认当前第0页， 每一页最多展示10条数据
+    find(page = 0, limit = 10) {
+        const query = new AV.Query('Image') //创建对象
+        query.include('owner')//返回的数据包含owner字段
+        query.limit(limit) //每页展示多少数据
+        query.skip(page * limit) //跳过
+        query.descending('createdAt')//排序
+        query.equalTo('owner', AV.User.current())//用户只能查询自己的上传数据
+        return new Promise((resolve, reject) => {
+            query.find()
+                .then(results => resolve(results))
+                .catch(error => reject(error))
+        })
     }
 }
 
+window.UpLoader = UpLoader
 
 export {Auth, UpLoader};
