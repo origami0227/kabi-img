@@ -81,6 +81,7 @@ const UpLoader = {
                 .catch(error => reject(error))
         })
     }
+
 }
 
 window.UpLoader = UpLoader
