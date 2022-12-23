@@ -80,6 +80,11 @@ const UpLoader = {
                 .then(results => resolve(results))
                 .catch(error => reject(error))
         })
+    },
+    delete(id){
+      if(!id) throw new Error ('objectId必须填写')
+      const image = AV.Object.createWithoutData('Image',id)
+      image.destroy()
     }
 
 }

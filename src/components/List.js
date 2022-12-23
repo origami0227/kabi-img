@@ -24,6 +24,10 @@ const DataList = observer(() => {
             HistoryStore.reset() //重置
         }
     },[])
+    //删除后UI自动更新
+    useEffect(()=>{
+       HistoryStore.find()
+    },HistoryStore.list)
     //InfiniteScroll的属性写成一个对象
     // const options = {
     //     initialLoad: true,
@@ -56,6 +60,7 @@ const DataList = observer(() => {
                                   <div>
                                       <a href={item.attributes.url.attributes.url}>{item.attributes.url.attributes.url}</a>
                                   </div>
+                                  <button onClick={()=>HistoryStore.delete(item)}>删除记录</button>
                               </List.Item>
                       }
                 >

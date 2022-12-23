@@ -44,8 +44,12 @@ class HistoryStore {
         this.page = 0
     }
 
-    @action delete() {
-
+    @action delete(item) {
+        UpLoader.delete(item.id)
+            .then(() => {
+                //删除结束以后 历史记录要更新新的UI（筛选出没有被删除的重新渲染）
+                this.list = this.list.filter(i => i.id !== item.id)
+            })
     }
 }
 
