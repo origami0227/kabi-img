@@ -24,13 +24,14 @@ class HistoryStore {
         UpLoader.find({page: this.page, limit: this.limit})
             .then(newList => {
                 this.append(newList)
+                this.page++
                 //是否有更多数据的判断
-                if(newList.length < this.limit){
+                if (newList.length < this.limit) {
                     this.hasMore = false
                 }
             }).catch(error => {
-                message.error('加载数据失败')
-        }).finally(()=>{
+            message.error('加载数据失败')
+        }).finally(() => {
             this.isLoading = false
         })
     }
