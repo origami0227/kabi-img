@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import logo from './logo.svg'
 import {NavLink, useNavigate} from "react-router-dom";
 import styled from 'styled-components'
 import {Button} from "antd";
 import {useStores} from "../stores";
 import {observer} from "mobx-react";
+import userStore from '../stores/user'
 
 
 const Header = styled.header` //返回一个新的标签
@@ -50,6 +51,9 @@ const Component = observer(() => {
         console.log('跳转到注册界面')
         navigate("/register")
     }
+    useEffect(()=>{
+        userStore.pullUser() //每次挂载都拉取用户信息
+    },[])
     return (
         <Header>
             <Logo src={logo} alt=''/>
