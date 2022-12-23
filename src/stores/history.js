@@ -35,6 +35,13 @@ class HistoryStore {
             this.isLoading = false
         })
     }
+    //清空或重制
+    @action reset() {
+        this.list = []
+        this.isLoading = false
+        this.hasMore = true
+        this.page = 0
+    }
 }
 
 export default new HistoryStore()

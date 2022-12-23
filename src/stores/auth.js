@@ -2,6 +2,8 @@ import {observable, action, makeObservable} from "mobx";
 import {Auth} from '../models'
 import UserStore from './user'
 import {message} from 'antd';
+import HistoryStore from './history'
+import ImageStore from './image'
 
 
 class AuthStore {
@@ -73,6 +75,8 @@ class AuthStore {
     @action logout() {
         Auth.logout()
         UserStore.resetUser()//重置
+        HistoryStore.reset()
+        ImageStore.reset()
     }
 }
 
