@@ -1,7 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
 import {useStores} from "../stores";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
 import {List, Spin} from 'antd';
 
 const DataList = observer(() => {
@@ -20,13 +20,13 @@ const DataList = observer(() => {
     //     dataLength: HistoryStore.limit
     // }
     return (
+        <>
         <InfiniteScroll
             initialLoad={true}
             pageStart={0}
             loadMore={loadMore}
             hasMore={!HistoryStore.isLoading && HistoryStore.hasMore}
             useWindow={true}
-            dataLength={HistoryStore.limit}
         >
             <List dataSource={HistoryStore.list}
                   renderItem={
@@ -52,6 +52,7 @@ const DataList = observer(() => {
                 )}
             </List>
         </InfiniteScroll>
+        </>
     )
 })
 
