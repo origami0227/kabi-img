@@ -84,7 +84,7 @@ const UpLoader = {
     delete(id){
       if(!id) throw new Error ('objectId必须填写')
       const image = AV.Object.createWithoutData('Image',id)
-      image.destroy()
+      return image.destroy()
     }
 
 }

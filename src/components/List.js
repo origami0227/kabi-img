@@ -24,10 +24,7 @@ const DataList = observer(() => {
             HistoryStore.reset() //重置
         }
     },[])
-    //删除后UI自动更新
-    useEffect(()=>{
-       HistoryStore.find()
-    },HistoryStore.list)
+
     //InfiniteScroll的属性写成一个对象
     // const options = {
     //     initialLoad: true,
