@@ -1,6 +1,6 @@
 rm -rf dist &&
 yarn build &&
-cd dist &&
+cd build &&
 git init &&
 git add . &&
 git commit -m 'update' &&

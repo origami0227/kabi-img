@@ -9,7 +9,7 @@ function About() {
                 在开发的过程中遇到了一些工具版本兼容问题，也提高了我检索信息以及排查纠错的能力。在开发的过程中也通过博客的形式记录了我思路想法以及具体的实现过程。
                 项目源码详见我的github仓库,欢迎各位的批评指正。
             </p>
-            <strong>博客地址：<a href="https://juejin.cn/user/1394649148430445">掘金</a></strong>
+            <strong>博客地址：<a href="https://juejin.cn/user/1394649148430445">掘金首页 </a></strong>
             <br/>
             <strong>Github地址：<a href="https://github.com/origami0227/kabi-img">kabi-img</a></strong>
         </>
